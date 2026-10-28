@@ -1,0 +1,38 @@
+[project]
+name = "rag-from-scratch"
+version = "0.1.0"
+description = "Learning RAG end to end: embeddings, chunking, vector DBs, retrieval, re-ranking, evaluation"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.0",
+  "datasets>=2.19",
+  "sentence-transformers>=3.0",
+  "faiss-cpu>=1.8",
+  "rank-bm25>=0.2.2",
+  "anthropic>=0.40",
+  "python-dotenv>=1.0",
+  "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+pg = ["psycopg[binary]>=3.1", "pgvector>=0.3"]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["rag*"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501", "E741", "E731"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
