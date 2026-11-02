@@ -25,6 +25,32 @@ make db                      # optional: pgvector in Docker on :5433
 make test
 ```
 
+### Windows (PowerShell)
+`make` isn't available on Windows; run the commands directly.
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install -e ".[pg,dev]"
+Copy-Item .env.example .env   # add ANTHROPIC_API_KEY (lessons 6–7 only)
+docker compose up -d pgvector # optional
+pytest -q
+```
+
+| Lesson | Command |
+|--------|---------|
+| 1 | `python -m lessons.l01_embeddings` |
+| 2 | `python -m lessons.l02_chunking` |
+| 3 | `python -m lessons.l03_vector_stores` |
+| 4 | `python -m lessons.l04_retrieval` |
+| 5 | `python -m lessons.l05_reranking` |
+| 6 | `python -m lessons.l06_generation` |
+| 7 | `python -m lessons.l07_evaluation` |
+
+Environment variables are set per session, e.g. `$env:SEMANTIC=1; python -m lessons.l02_chunking`.
+
 ## Curriculum
 
 | # | Concept | Run | Module |
