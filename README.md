@@ -125,4 +125,11 @@ Record your numbers here as you go (config → nDCG@10, Recall@100, latency).
 
 | Date | Config | nDCG@10 | Recall@100 | Notes |
 |------|--------|---------|------------|-------|
-|      |        |         |            |       |
+| 2026-11-11 | dense bge-small, no_chunking (baseline) | 0.7127 | 0.9417 | 5,183 vectors; matches published ~0.72 |
+| 2026-11-11 | no_chunking, no title | 0.6968 | 0.9483 | title is worth +0.016 nDCG |
+| 2026-11-11 | sentence_64 | 0.7256 | 0.9567 | best chunker, 30,079 vectors (6×); paired diff +0.013, 95% CI [−0.003, +0.029], p=0.11 → not significant |
+| 2026-11-11 | fixed_64_o16 | 0.7095 | 0.9600 | cutting mid-sentence: no nDCG gain |
+| 2026-11-11 | store: FAISS Flat vs HNSW (5,183 vecs) | — | — | Flat 0.255 ms/q exact; HNSW ef=64 ANN-recall@10 0.9967 at 0.079 ms/q (3.2× faster). Keep exact at this size |
+| 2026-11-11 | retrieve: BM25 | 0.6686 | 0.8859 | matches published ~0.665; beats dense on 52/300 queries |
+| 2026-11-11 | retrieve: hybrid RRF (bm25 + dense) | 0.7112 | 0.9683 | same nDCG as dense, +2.7 pts Recall@100 → better first stage for rerank |
+| 2026-11-11 | retrieve: hybrid RRF, dense weight 2× | 0.7159 | 0.9650 | best nDCG, but CIs overlap with dense |
